@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	const messageListEmpty = document.querySelector("#js-message-list-empty");
 	const messageInvalidLength = document.querySelector("#js-message-invalid-length");
 
+	if (localStorage.getItem("listItemArray")) {
+		let listItemArray = JSON.parse(localStorage.getItem("listItemArray"));
+
+		listItemArray.forEach( listItem => {
+			list.innerHTML += listItem;
+		})
+	}
+
 	checkListEmptiness();
 
 	push.addEventListener("click", ()=> {
@@ -23,12 +31,11 @@ document.addEventListener("DOMContentLoaded", function(){
 			<span class="list-item__text">${inputValue}</span>
 			`;
 
-			newItem.addEventListener("click", function() {
-				this.classList.toggle("completed");
-			});
+			newItem.addEventListener("click", toComplete);
 			list.append(newItem);
 			checkListEmptiness();
 			messageInvalidLength.classList.remove("active");
+			toLocalStorage();
 		} else {
 			messageInvalidLength.classList.add("active");
 		}
@@ -36,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 	Array.from(listItemGroup).forEach( listItem => {
-		listItem.addEventListener("click", function(){
-			this.classList.toggle("completed");
-		});
+		listItem.addEventListener("click", toComplete);
 	})
 
 	clear.addEventListener("click", ()=> {
@@ -47,7 +52,23 @@ document.addEventListener("DOMContentLoaded", function(){
 		});
 
 		checkListEmptiness();
+		toLocalStorage();
 	});
+
+	function toComplete() {
+		this.classList.toggle("completed");
+		toLocalStorage();
+	}
+
+	function toLocalStorage() {
+		let listItemArray = [];
+		for (let i = 0; i < listItemGroup.length; i++) {
+			listItemArray.push(listItemGroup[i].outerHTML);
+		}
+		// console.log(listItemArray);
+		localStorage.setItem("listItemArray", JSON.stringify(listItemArray));
+		// console.log(JSON.parse(localStorage.getItem("listItemArray")))
+	}
 
 	function checkListEmptiness() {
 		if (listItemGroup.length == 0) {

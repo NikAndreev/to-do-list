@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>to-do list</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=divice-width, initial-scale=1.0">
+	<link rel="stylesheet" href="assets/css/template.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="icon" href="assets/img/icon.jpg" type = "image/x-icon">
+</head>
+<body>
+<div class="container">
+	<section class="to-do-list">
+		<h1 class="title">To-do list</h1>	
+		<ul class="list" id="js-list">
+			<li class="list-item js-list-item">
+				<span class="list-item__checkbox"></span>
+				<span class="list-item__text">Сходить в магазин</span>
+			</li>
+			<li class="list-item js-list-item">
+				<span class="list-item__checkbox"></span>
+				<span class="list-item__text">Покормить кота</span>
+			</li>
+			<li class="list-item js-list-item">
+				<span class="list-item__checkbox"></span>
+				<span class="list-item__text">Заправить машину</span>
+			</li>
+		</ul>
+		<div class="message" id="js-message-list-empty">
+			Задач нет
+		</div>
+		<div class="message" id="js-message-invalid-length">
+			Задача не должна быть пустой
+		</div>
+		<div class="btn-group">
+			<div class="add-group">
+				<div class="input-wrap"><input type="text" class="input" id="js-input"></div>
+				<div class="btn btn_blue" id="js-push">Добавить задачу</div>
+			</div>
+			<div class="btn btn_red" id="js-clear">Удалить выполненные</div>
+		</div>
+	</section>
+</div>
+<script src="assets/js/template.js"></script>
+</body>
+</html>

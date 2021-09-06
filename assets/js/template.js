@@ -1,15 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener('DOMContentLoaded', function(){
 
-	const list = document.querySelector("#js-list");
-	const listItemGroup = list.getElementsByClassName("js-list-item");
-	const push = document.querySelector("#js-push");
-	const input = document.querySelector("#js-input");
-	const clear = document.querySelector("#js-clear");
-	const messageListEmpty = document.querySelector("#js-message-list-empty");
-	const messageInvalidLength = document.querySelector("#js-message-invalid-length");
+	const list = document.querySelector('#js-list');
+	const listItemGroup = list.getElementsByClassName('js-list-item');
+	const push = document.querySelector('#js-push');
+	const input = document.querySelector('#js-input');
+	const clear = document.querySelector('#js-clear');
+	const messageListEmpty = document.querySelector('#js-message-list-empty');
+	const messageInvalidLength = document.querySelector('#js-message-invalid-length');
 
-	if (localStorage.getItem("listItemArray")) {
-		let listItemArray = JSON.parse(localStorage.getItem("listItemArray"));
+	if (localStorage.getItem('listItemArray')) {
+		let listItemArray = JSON.parse(localStorage.getItem('listItemArray'));
 
 		listItemArray.forEach( listItem => {
 			list.innerHTML += listItem;
@@ -18,37 +18,38 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	checkListEmptiness();
 
-	push.addEventListener("click", ()=> {
+	push.addEventListener('click', ()=> {
 
 		if (input.value.trim()) {
 			const inputValue = input.value;
-			input.value = "";
+			input.value = '';
 
-			const newItem = document.createElement("li");
-			newItem.className = "list-item js-list-item";
+			const newItem = document.createElement('li');
+			newItem.className = 'list-item js-list-item';
 			newItem.innerHTML = `
-			<span class="list-item__checkbox"></span>
-			<span class="list-item__text">${inputValue}</span>
+			<span class='list-item__checkbox'></span>
+			<span class='list-item__text'>${inputValue}</span>
 			`;
 
-			newItem.addEventListener("click", toComplete);
+			newItem.addEventListener('click', toComplete);
 			list.append(newItem);
 			checkListEmptiness();
-			messageInvalidLength.classList.remove("active");
+			messageInvalidLength.classList.remove('active');
 			toLocalStorage();
 		} else {
-			messageInvalidLength.classList.add("active");
+			messageInvalidLength.classList.add('active');
+			messageListEmpty.classList.remove('active');
 		}
 
 	});
 
 	Array.from(listItemGroup).forEach( listItem => {
-		listItem.addEventListener("click", toComplete);
+		listItem.addEventListener('click', toComplete);
 	})
 
-	clear.addEventListener("click", ()=> {
+	clear.addEventListener('click', ()=> {
 		Array.from(listItemGroup).forEach( listItem => {
-			if (listItem.classList.contains("completed")) listItem.remove();
+			if (listItem.classList.contains('completed')) listItem.remove();
 		});
 
 		checkListEmptiness();
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 
 	function toComplete() {
-		this.classList.toggle("completed");
+		this.classList.toggle('completed');
 		toLocalStorage();
 	}
 
@@ -66,17 +67,18 @@ document.addEventListener("DOMContentLoaded", function(){
 			listItemArray.push(listItemGroup[i].outerHTML);
 		}
 		// console.log(listItemArray);
-		localStorage.setItem("listItemArray", JSON.stringify(listItemArray));
-		// console.log(JSON.parse(localStorage.getItem("listItemArray")))
+		localStorage.setItem('listItemArray', JSON.stringify(listItemArray));
+		// console.log(JSON.parse(localStorage.getItem('listItemArray')))
 	}
 
 	function checkListEmptiness() {
 		if (listItemGroup.length == 0) {
-			messageListEmpty.classList.add("active");
-			list.classList.add("empty");
+			messageListEmpty.classList.add('active');
+			list.classList.add('empty');
+			messageInvalidLength.classList.remove('active');
 		} else {
-			messageListEmpty.classList.remove("active");
-			list.classList.remove("empty");
+			messageListEmpty.classList.remove('active');
+			list.classList.remove('empty');
 		}
 	}
 	 
